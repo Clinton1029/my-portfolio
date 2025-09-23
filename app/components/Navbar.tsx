@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const LINKS = [
   { id: "hero", label: "Home" },
@@ -10,69 +11,58 @@ const LINKS = [
 ];
 
 export default function Navbar() {
-  const [active, setActive] = useState("hero");
-  const [scrolled, setScrolled] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress((window.scrollY / (total || 1)) * 100);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    // IntersectionObserver for active link
-    const sections = Array.from(document.querySelectorAll("section[id]"));
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-        });
-      },
-      { threshold: 0.45 }
-    );
-    sections.forEach((s) => obs.observe(s));
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      obs.disconnect();
-    };
-  }, []);
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition`}>
-      <div
-        className={`backdrop-blur-md bg-white/60 border-b border-white/10 max-w-6xl mx-auto px-6 py-3 flex items-center justify-between rounded-b-lg shadow-sm ${scrolled ? "backdrop-blur-sm" : ""
-          }`}
-      >
-        <div className="text-lg font-bold text-blue-600">Clinton Yade</div>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
+      <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+        <div className="text-xl font-bold text-blue-600">Clinton Yade</div>
 
-        <nav className="hidden md:flex gap-6">
-          {LINKS.map((l) => (
+        {/* Desktop menu */}
+        <nav className="hidden md:flex space-x-6">
+          {LINKS.map((link) => (
             <a
-              key={l.id}
-              href={`#${l.id}`}
-              className={`py-1 px-2 text-sm rounded-md transition ${active === l.id ? "text-blue-600 font-semibold" : "text-slate-700 hover:text-blue-600"
-                }`}
+              key={link.id}
+              href={`#${link.id}`}
+              className="text-gray-700 hover:text-blue-600 transition"
             >
-              {l.label}
+              {link.label}
             </a>
           ))}
         </nav>
 
-        <div className="md:hidden text-sm text-slate-700">Menu</div>
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden p-2 rounded-md border border-gray-300"
+        >
+          ☰
+        </button>
       </div>
 
-      {/* scroll progress */}
-      <div className="h-0.5 bg-transparent">
-        <div
-          aria-hidden
-          style={{ width: `${progress}%` }}
-          className="h-0.5 bg-blue-600 transition-all"
-        />
-      </div>
+      {/* Mobile dropdown */}
+      <AnimatePresence>
+        {open && (
+          <motion.nav
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="md:hidden bg-white px-6 py-6 flex flex-col space-y-4 shadow-lg"
+          >
+            {LINKS.map((link) => (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                onClick={() => setOpen(false)}
+                className="text-gray-700 hover:text-blue-600 transition"
+              >
+                {link.label}
+              </a>
+            ))}
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
