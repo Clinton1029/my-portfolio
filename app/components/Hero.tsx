@@ -41,8 +41,11 @@ export default function Hero() {
           particles: {
             color: { value: "#00d4ff" },
             links: { enable: true, color: "#ffffff", distance: 150, opacity: 0.3 },
-            move: { enable: true, speed: 1.2 },
-            number: { value: 60 },
+            move: { enable: true, speed: 0.3 }, // 🔥 Slower movement
+            number: {
+              value: 60,
+              density: { enable: true, area: 800 }, // 🔥 Responsive density
+            },
             opacity: { value: 0.4 },
             size: { value: { min: 1, max: 4 } },
           },
@@ -52,17 +55,24 @@ export default function Hero() {
 
       {/* Top Section */}
       <div className="relative z-10 flex flex-col items-center space-y-4 pt-14 sm:pt-16">
-        {/* Profile Image */}
-        <motion.img
-          src="/profile.jpg"
-          alt="Clinton Yade"
-          className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 
-                     rounded-full border-4 border-white shadow-xl object-cover 
-                     hover:scale-105 transition-transform duration-300"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1 }}
-        />
+        {/* Profile Image with Glowing Border */}
+        <div className="relative">
+          {/* Glowing Gradient Ring */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 
+                          blur-lg opacity-70 animate-pulse"></div>
+
+          {/* Actual Image */}
+          <motion.img
+            src="/profile.jpg"
+            alt="Clinton Yade"
+            className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 
+                       rounded-full border-4 border-white shadow-xl object-cover 
+                       hover:scale-105 transition-transform duration-300"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1 }}
+          />
+        </div>
 
         {/* Heading */}
         <motion.h1
