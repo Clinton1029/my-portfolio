@@ -15,18 +15,22 @@ export default function Hero() {
       dark:from-gray-900 dark:via-gray-950 dark:to-blue-950 
       transition-colors duration-500 overflow-hidden"
     >
-      {/* Background floating shapes */}
+      {/* Background floating blobs (light/dark adaptive) */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.12, y: [0, -60, 0] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-10 left-10 w-52 h-52 bg-blue-400 dark:bg-blue-600 rounded-full blur-3xl"
+        animate={{ opacity: 0.15, y: [0, -60, 0] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-10 left-10 w-52 h-52 
+        bg-blue-300 dark:bg-cyan-500 
+        rounded-full blur-3xl"
       />
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.12, y: [0, 60, 0] }}
+        animate={{ opacity: 0.15, y: [0, 60, 0] }}
         transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-10 right-10 w-64 h-64 bg-purple-400 dark:bg-purple-700 rounded-full blur-3xl"
+        className="absolute bottom-10 right-10 w-64 h-64 
+        bg-purple-400 dark:bg-fuchsia-600 
+        rounded-full blur-3xl"
       />
 
       {/* Profile Image */}
@@ -56,7 +60,8 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.3 }}
           className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-gray-100"
         >
-          Hi, I’m <span className="text-blue-600 dark:text-blue-400">Clinton Yade</span>
+          Hi, I’m{" "}
+          <span className="text-blue-600 dark:text-blue-400">Clinton Yade</span>
         </motion.h1>
 
         {/* Typing Animation */}
@@ -74,7 +79,7 @@ export default function Hero() {
               "Problem Solver", 4000,
             ]}
             wrapper="span"
-            speed={30} // slower typing
+            speed={30}
             repeat={Infinity}
             className="font-medium text-blue-600 dark:text-blue-400"
           />
