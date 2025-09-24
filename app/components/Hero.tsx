@@ -19,7 +19,7 @@ export default function Hero() {
         className="w-40 h-40 md:w-56 md:h-56 relative rounded-full overflow-hidden shadow-lg"
       >
         <Image
-          src="/images/profile.jpg"
+          src="/profile.jpg"
           alt="Clinton Yade"
           fill
           sizes="(max-width: 768px) 150px, 250px"
