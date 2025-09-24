@@ -1,153 +1,200 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { TypeAnimation } from "react-type-animation";
+import { motion, AnimatePresence } from "framer-motion";
+import Particles from "react-tsparticles";
+import { loadSlim } from "tsparticles-slim";
+import { useCallback, useEffect, useState } from "react";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { ChevronDown } from "lucide-react";
+import { HiChevronDown } from "react-icons/hi";
 
 export default function Hero() {
+  const particlesInit = useCallback(async (engine: any) => {
+    await loadSlim(engine);
+  }, []);
+
+  const roles = ["Data Scientist", "Data Analyst", "Software Engineer"];
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % roles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section
-      id="hero"
-      className="relative h-screen flex flex-col md:flex-row items-center justify-center px-6 md:px-16 
-      bg-gradient-to-br from-gray-900 via-gray-950 to-blue-950 
-      text-white overflow-hidden"
+      className="relative grid grid-rows-[auto,1fr,auto] h-screen px-4 sm:px-6 py-6 text-center 
+                 bg-gradient-to-br from-[#0a0f1f] via-[#0f172a] to-black overflow-hidden"
     >
-      {/* Animated background gradient blobs */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.15, x: [0, 50, 0], y: [0, -50, 0] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-20 left-20 w-96 h-96 bg-blue-600 rounded-full blur-3xl"
-      />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.15, x: [0, -60, 0], y: [0, 60, 0] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-20 right-20 w-[28rem] h-[28rem] bg-purple-600 rounded-full blur-3xl"
+      {/* Background Particles */}
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        options={{
+          background: { color: "transparent" },
+          fpsLimit: 60,
+          interactivity: {
+            events: { onHover: { enable: true, mode: "repulse" }, resize: true },
+            modes: { repulse: { distance: 120, duration: 0.4 } },
+          },
+          particles: {
+            color: { value: "#00d4ff" },
+            links: { enable: true, color: "#ffffff", distance: 150, opacity: 0.3 },
+            move: { enable: true, speed: 1.2 },
+            number: { value: 60 },
+            opacity: { value: 0.4 },
+            size: { value: { min: 1, max: 4 } },
+          },
+        }}
+        className="absolute inset-0 z-0"
       />
 
-      {/* Profile Image */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2 }}
-        className="relative w-52 h-52 md:w-64 md:h-64 rounded-full overflow-hidden shadow-2xl 
-        border-4 border-transparent bg-gradient-to-tr from-blue-500 to-purple-600 p-[3px]"
-      >
-        <Image
+      {/* Top Section */}
+      <div className="relative z-10 flex flex-col items-center space-y-4 pt-14 sm:pt-16">
+        {/* Profile Image */}
+        <motion.img
           src="/profile.jpg"
           alt="Clinton Yade"
-          fill
-          sizes="(max-width: 768px) 200px, 300px"
-          className="rounded-full object-cover"
+          className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 
+                     rounded-full border-4 border-white shadow-xl object-cover 
+                     hover:scale-105 transition-transform duration-300"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1 }}
         />
-      </motion.div>
 
-      {/* Text Content */}
-      <div className="mt-8 md:mt-0 md:ml-16 text-center md:text-left max-w-xl z-10">
-        {/* Headline */}
+        {/* Heading */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="text-3xl sm:text-4xl md:text-6xl font-extrabold whitespace-nowrap"
+          className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight 
+                     bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 
+                     bg-clip-text text-transparent drop-shadow-lg"
         >
-          Hi, I’m{" "}
-          <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Clinton Yade
-          </span>
+          Hi, I’m Clinton Yade
         </motion.h1>
 
-        {/* Typing Animation */}
-        <motion.div
+        {/* Rotating Role */}
+        <div className="h-6 sm:h-8 md:h-10 overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.h2
+              key={roles[index]}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6 }}
+              className="text-sm sm:text-base md:text-lg text-blue-300 font-medium"
+            >
+              {roles[index]}
+            </motion.h2>
+          </AnimatePresence>
+        </div>
+
+        {/* Description */}
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-4 text-lg md:text-2xl h-10"
+          transition={{ duration: 1, delay: 0.9 }}
+          className="max-w-md sm:max-w-xl text-gray-300 leading-relaxed text-xs sm:text-sm md:text-base"
         >
-          <TypeAnimation
-            sequence={[
-              "Data Scientist", 4000,
-              "Software Engineer", 4000,
-              "Data Analyst", 4000,
-              "Problem Solver", 4000,
-            ]}
-            wrapper="span"
-            speed={40}
-            repeat={Infinity}
-            className="font-medium text-blue-400"
-          />
-        </motion.div>
+          Passionate about turning <span className="text-blue-400">data</span>{" "}
+          into <span className="text-purple-400">solutions</span> that drive{" "}
+          <span className="text-pink-400">innovation</span>.
+        </motion.p>
+      </div>
 
-        {/* Buttons */}
+      {/* Middle Section: Stats + Buttons */}
+      <div className="relative z-10 flex flex-col items-center space-y-4 justify-center">
+        {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+          className="flex gap-3 sm:gap-5 text-gray-200 flex-wrap justify-center"
+        >
+          {[
+            { label: "Years Exp.", value: "1+", color: "text-blue-400" },
+            { label: "Projects", value: "5+", color: "text-purple-400" },
+            { label: "Clients", value: "2+", color: "text-pink-400" },
+          ].map((stat, idx) => (
+            <div
+              key={idx}
+              className="bg-white/10 backdrop-blur-lg rounded-lg px-3 py-2 sm:px-4 sm:py-2 shadow-md 
+                         hover:scale-105 transition-transform"
+            >
+              <span className={`text-sm sm:text-lg md:text-xl font-bold ${stat.color}`}>
+                {stat.value}
+              </span>
+              <p className="text-xs sm:text-sm">{stat.label}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Smaller Buttons */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.5 }}
+          className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2"
         >
           <a
             href="#projects"
-            className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:shadow-lg hover:scale-105 
-            transition-transform duration-300"
+            className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
+                       text-white font-semibold shadow-md hover:scale-105 transition-transform text-xs sm:text-sm"
           >
             View My Work
           </a>
           <a
-            href="/Clinton_Yade_CV.pdf"
-            download
-            className="px-6 py-3 rounded-lg border border-blue-400 text-blue-400 hover:bg-blue-500/10 
-            transition-colors duration-300"
+            href="/cv.pdf"
+            className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md border border-blue-400 text-blue-300 font-semibold 
+                       shadow-md hover:bg-blue-400 hover:text-white transition text-xs sm:text-sm"
           >
             Download CV
           </a>
         </motion.div>
+      </div>
 
+      {/* Bottom Section: Social Icons + Scroll Arrow */}
+      <div className="relative z-10 flex flex-col items-center space-y-4 pt-6 pb-4">
         {/* Social Icons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.6 }}
-          className="mt-8 flex gap-6 justify-center md:justify-start text-2xl"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.8 }}
+          className="flex gap-4 sm:gap-6 flex-wrap justify-center"
         >
           <a
-            href="https://github.com/yourusername"
+            href="https://github.com"
             target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-blue-400 transition"
+            className="p-2 sm:p-3 bg-white/10 rounded-full hover:scale-110 transition"
           >
-            <FaGithub />
+            <FaGithub className="text-lg sm:text-xl md:text-2xl text-black" />
           </a>
           <a
-            href="https://linkedin.com/in/yourusername"
+            href="https://linkedin.com"
             target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-blue-400 transition"
+            className="p-2 sm:p-3 bg-white/10 rounded-full hover:scale-110 transition"
           >
-            <FaLinkedin />
+            <FaLinkedin className="text-lg sm:text-xl md:text-2xl text-blue-600" />
           </a>
           <a
-            href="https://twitter.com/yourusername"
+            href="https://twitter.com"
             target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-blue-400 transition"
+            className="p-2 sm:p-3 bg-white/10 rounded-full hover:scale-110 transition"
           >
-            <FaTwitter />
+            <FaTwitter className="text-lg sm:text-xl md:text-2xl text-sky-400" />
+          </a>
+        </motion.div>
+
+        {/* Scroll Down Arrow */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}>
+          <a href="#about">
+            <HiChevronDown className="text-lg sm:text-xl md:text-2xl text-blue-400 animate-bounce" />
           </a>
         </motion.div>
       </div>
-
-      {/* Scroll Down Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.9, y: [0, 12, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-8 text-blue-400"
-      >
-        <ChevronDown size={32} />
-      </motion.div>
     </section>
   );
 }
