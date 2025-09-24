@@ -41,11 +41,8 @@ export default function Hero() {
           particles: {
             color: { value: "#00d4ff" },
             links: { enable: true, color: "#ffffff", distance: 150, opacity: 0.3 },
-            move: { enable: true, speed: 0.3 }, // 🔥 Slower movement
-            number: {
-              value: 60,
-              density: { enable: true, area: 800 }, // 🔥 Responsive density
-            },
+            move: { enable: true, speed: 0.3 }, // Slow stars
+            number: { value: 60 },
             opacity: { value: 0.4 },
             size: { value: { min: 1, max: 4 } },
           },
@@ -55,17 +52,21 @@ export default function Hero() {
 
       {/* Top Section */}
       <div className="relative z-10 flex flex-col items-center space-y-4 pt-14 sm:pt-16">
-        {/* Profile Image with Glowing Border */}
+        {/* Profile Image with Pulsing Glow */}
         <div className="relative">
-          {/* Glowing Gradient Ring */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 
-                          blur-lg opacity-70 animate-pulse"></div>
+          {/* Glow Aura */}
+          <motion.div
+            initial={{ opacity: 0.3, scale: 1 }}
+            animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 blur-2xl"
+          ></motion.div>
 
-          {/* Actual Image */}
+          {/* Profile Image */}
           <motion.img
             src="/profile.jpg"
             alt="Clinton Yade"
-            className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 
+            className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 
                        rounded-full border-4 border-white shadow-xl object-cover 
                        hover:scale-105 transition-transform duration-300"
             initial={{ scale: 0, opacity: 0 }}
@@ -142,24 +143,32 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* Smaller Buttons */}
+        {/* Buttons with Pulsing Glow */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.5 }}
-          className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2"
+          className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-6 relative"
         >
+          {/* Glow behind buttons */}
+          <motion.div
+            initial={{ opacity: 0.2, scale: 1 }}
+            animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.05, 1] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -inset-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 blur-2xl rounded-xl"
+          ></motion.div>
+
           <a
             href="#projects"
             className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
-                       text-white font-semibold shadow-md hover:scale-105 transition-transform text-xs sm:text-sm"
+                       text-white font-semibold shadow-md hover:scale-105 transition-transform text-xs sm:text-sm relative z-10"
           >
             View My Work
           </a>
           <a
             href="/cv.pdf"
             className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md border border-blue-400 text-blue-300 font-semibold 
-                       shadow-md hover:bg-blue-400 hover:text-white transition text-xs sm:text-sm"
+                       shadow-md hover:bg-blue-400 hover:text-white transition text-xs sm:text-sm relative z-10"
           >
             Download CV
           </a>
