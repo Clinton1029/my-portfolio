@@ -1,5 +1,3 @@
- 
-
 "use client";
 
 import { motion } from "framer-motion";
@@ -9,42 +7,58 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="h-screen flex flex-col md:flex-row items-center justify-center text-center md:text-left gap-8"
+      className="h-screen flex flex-col md:flex-row items-center justify-center px-6 md:px-16 bg-gradient-to-br from-gray-50 via-white to-blue-50"
     >
-      {/* Profile Image */}
+      {/* Profile Image with glow border */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
-        className="w-40 h-40 md:w-56 md:h-56 relative rounded-full overflow-hidden shadow-lg"
+        className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden shadow-2xl border-4 border-transparent bg-gradient-to-tr from-blue-600 to-purple-600 p-1"
       >
         <Image
           src="/profile.jpg"
           alt="Clinton Yade"
           fill
-          sizes="(max-width: 768px) 150px, 250px"
-          className="object-cover"
+          sizes="(max-width: 768px) 200px, 300px"
+          className="rounded-full object-cover"
         />
       </motion.div>
 
-      {/* Text */}
+      {/* Text Content */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
+        className="mt-8 md:mt-0 md:ml-12 text-center md:text-left max-w-xl"
       >
-        <h1 className="text-3xl md:text-5xl font-bold">
+        <h1 className="text-4xl md:text-6xl font-bold text-gray-900">
           Hi, I’m <span className="text-blue-600">Clinton Yade</span>
         </h1>
-        <p className="mt-4 text-base md:text-lg text-gray-600">
-          Data Scientist • Software Engineer • Problem Solver
+
+        {/* Animated typing effect (optional with CSS) */}
+        <p className="mt-4 text-lg md:text-xl text-gray-700">
+          <span className="font-medium text-blue-600">
+            Data Scientist • Software Engineer • Problem Solver
+          </span>
         </p>
-        <a
-          href="#projects"
-          className="inline-block mt-6 px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
-        >
-          View My Work
-        </a>
+
+        {/* Buttons */}
+        <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <a
+            href="#projects"
+            className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition shadow-md"
+          >
+            View My Work
+          </a>
+          <a
+            href="/Clinton_Yade_CV.pdf"
+            download
+            className="px-6 py-3 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 transition"
+          >
+            Download CV
+          </a>
+        </div>
       </motion.div>
     </section>
   );
