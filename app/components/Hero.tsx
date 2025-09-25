@@ -41,7 +41,7 @@ export default function Hero() {
           particles: {
             color: { value: "#00d4ff" },
             links: { enable: true, color: "#ffffff", distance: 150, opacity: 0.3 },
-            move: { enable: true, speed: 0.3 }, // Slow stars
+            move: { enable: true, speed: 0.3 }, // slow stars
             number: { value: 60 },
             opacity: { value: 0.4 },
             size: { value: { min: 1, max: 4 } },
@@ -54,7 +54,6 @@ export default function Hero() {
       <div className="relative z-10 flex flex-col items-center space-y-4 pt-14 sm:pt-16">
         {/* Profile Image with Pulsing Glow */}
         <div className="relative">
-          {/* Glow Aura */}
           <motion.div
             initial={{ opacity: 0.3, scale: 1 }}
             animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1] }}
@@ -62,7 +61,6 @@ export default function Hero() {
             className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 blur-2xl"
           ></motion.div>
 
-          {/* Profile Image */}
           <motion.img
             src="/profile.jpg"
             alt="Clinton Yade"
@@ -143,14 +141,13 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* Buttons with Pulsing Glow */}
+        {/* Buttons with Glow */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.5 }}
           className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-6 relative"
         >
-          {/* Glow behind buttons */}
           <motion.div
             initial={{ opacity: 0.2, scale: 1 }}
             animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.05, 1] }}
@@ -177,34 +174,57 @@ export default function Hero() {
 
       {/* Bottom Section: Social Icons + Scroll Arrow */}
       <div className="relative z-10 flex flex-col items-center space-y-4 pt-6 pb-4">
-        {/* Social Icons */}
+        {/* Social Icons with Glow + Hover */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.8 }}
           className="flex gap-4 sm:gap-6 flex-wrap justify-center"
         >
-          <a
+          {/* GitHub */}
+          <motion.a
             href="https://github.com"
             target="_blank"
-            className="p-2 sm:p-3 bg-white/10 rounded-full hover:scale-110 transition"
+            className="relative p-2 sm:p-3 rounded-full"
+            whileHover={{ scale: 1.2 }}
           >
-            <FaGithub className="text-lg sm:text-xl md:text-2xl text-black" />
-          </a>
-          <a
+            <motion.div
+              className="absolute inset-0 rounded-full blur-lg bg-neutral-700 opacity-40"
+              animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.1, 1] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            />
+            <FaGithub className="relative text-lg sm:text-xl md:text-2xl text-black" />
+          </motion.a>
+
+          {/* LinkedIn */}
+          <motion.a
             href="https://linkedin.com"
             target="_blank"
-            className="p-2 sm:p-3 bg-white/10 rounded-full hover:scale-110 transition"
+            className="relative p-2 sm:p-3 rounded-full"
+            whileHover={{ scale: 1.2 }}
           >
-            <FaLinkedin className="text-lg sm:text-xl md:text-2xl text-blue-600" />
-          </a>
-          <a
+            <motion.div
+              className="absolute inset-0 rounded-full blur-lg bg-blue-600 opacity-40"
+              animate={{ opacity: [0.2, 0.6, 0.2], scale: [1, 1.1, 1] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            />
+            <FaLinkedin className="relative text-lg sm:text-xl md:text-2xl text-blue-600" />
+          </motion.a>
+
+          {/* Twitter */}
+          <motion.a
             href="https://twitter.com"
             target="_blank"
-            className="p-2 sm:p-3 bg-white/10 rounded-full hover:scale-110 transition"
+            className="relative p-2 sm:p-3 rounded-full"
+            whileHover={{ scale: 1.2 }}
           >
-            <FaTwitter className="text-lg sm:text-xl md:text-2xl text-sky-400" />
-          </a>
+            <motion.div
+              className="absolute inset-0 rounded-full blur-lg bg-sky-400 opacity-40"
+              animate={{ opacity: [0.2, 0.6, 0.2], scale: [1, 1.1, 1] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            />
+            <FaTwitter className="relative text-lg sm:text-xl md:text-2xl text-sky-400" />
+          </motion.a>
         </motion.div>
 
         {/* Scroll Down Arrow */}
