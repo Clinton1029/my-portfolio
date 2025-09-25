@@ -17,104 +17,139 @@ export default function Navbar() {
   const [active, setActive] = useState("hero");
   const [scrolled, setScrolled] = useState(false);
 
-  // Track scroll position for shadow + active link
+  // Scrollspy logic
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      setScrolled(window.scrollY > 20);
 
-      // Scrollspy logic
-      const offsets = LINKS.map((link) => {
+      const scrollPos = window.scrollY + 150; // offset
+      let current = "hero";
+
+      for (const link of LINKS) {
         const el = document.getElementById(link.id);
-        if (!el) return { id: link.id, top: 0 };
-        return { id: link.id, top: el.offsetTop - 120 };
-      });
+        if (el && el.offsetTop <= scrollPos) {
+          current = link.id;
+        }
+      }
 
-      const scrollPos = window.scrollY;
-      const current = offsets
-        .reverse()
-        .find((section) => scrollPos >= section.top);
-
-      if (current) setActive(current.id);
+      setActive(current);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // ✅ Dynamic smooth scroll + update active
+  const handleNavClick = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    setActive(id); // highlight immediately
+    setOpen(false);
+  };
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-slate-900/95 shadow-lg"
-          : "bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900"
+          ? "bg-slate-900/80 backdrop-blur-md shadow-lg py-2"
+          : "bg-transparent py-4"
       }`}
     >
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <div className="text-xl font-bold text-white tracking-wide">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6">
+        {/* Logo (also scrolls to hero) */}
+        <div
+          className="text-2xl font-extrabold tracking-wide bg-gradient-to-r 
+          from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text cursor-pointer"
+          onClick={() => handleNavClick("hero")}
+        >
           Clinton Yade
         </div>
 
         {/* Desktop menu */}
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden md:flex space-x-10">
           {LINKS.map((link) => (
-            <a
+            <button
               key={link.id}
-              href={`#${link.id}`}
-              className={`transition-colors ${
+              onClick={() => handleNavClick(link.id)}
+              className={`relative font-medium transition-colors ${
                 active === link.id
-                  ? "text-blue-400 font-semibold"
+                  ? "text-blue-400"
                   : "text-gray-200 hover:text-blue-400"
               }`}
             >
               {link.label}
-            </a>
+              {active === link.id && (
+                <motion.span
+                  layoutId="underline"
+                  className="absolute -bottom-1 left-0 w-full h-[2px] bg-blue-400 rounded-full"
+                />
+              )}
+            </button>
           ))}
         </nav>
 
         {/* Mobile hamburger */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden p-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
+          className="md:hidden relative w-8 h-8 flex flex-col justify-center items-center space-y-1"
         >
-          ☰
+          <motion.span
+            animate={open ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="w-6 h-[2px] bg-white rounded"
+          />
+          <motion.span
+            animate={open ? { opacity: 0 } : { opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="w-6 h-[2px] bg-white rounded"
+          />
+          <motion.span
+            animate={open ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="w-6 h-[2px] bg-white rounded"
+          />
         </button>
       </div>
 
-      {/* Mobile sidebar drawer */}
+      {/* Mobile drawer */}
       <AnimatePresence>
         {open && (
           <>
-            {/* Overlay */}
             <motion.div
-              className="fixed inset-0 bg-black/50"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
             />
 
-            {/* Slide-in drawer */}
             <motion.nav
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: 0.4 }}
-              className="fixed top-0 right-0 h-full w-3/4 max-w-sm bg-slate-900 p-6 flex flex-col space-y-6 md:hidden shadow-xl"
+              transition={{ duration: 0.35 }}
+              className="fixed top-0 right-0 h-full w-3/4 max-w-sm bg-slate-900/95 backdrop-blur-md p-8 flex flex-col space-y-8 md:hidden shadow-xl"
             >
-              {LINKS.map((link) => (
-                <a
+              <div className="text-xl font-bold text-white">Menu</div>
+              {LINKS.map((link, idx) => (
+                <motion.button
                   key={link.id}
-                  href={`#${link.id}`}
-                  onClick={() => setOpen(false)}
-                  className={`text-lg transition-colors ${
+                  onClick={() => handleNavClick(link.id)}
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className={`text-lg text-left transition-colors ${
                     active === link.id
                       ? "text-blue-400 font-semibold"
-                      : "text-gray-200 hover:text-blue-400"
+                      : "text-gray-300 hover:text-blue-400"
                   }`}
                 >
                   {link.label}
-                </a>
+                </motion.button>
               ))}
             </motion.nav>
           </>
