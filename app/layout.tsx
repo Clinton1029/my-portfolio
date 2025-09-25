@@ -4,6 +4,8 @@ import "./globals.css";
 import type { ReactNode } from "react";
 import Navbar from "./components/Navbar";
 import { ThemeProvider } from "next-themes";
+import BackgroundParticles from "./components/BackgroundParticles";
+
 
 
 
@@ -22,20 +24,13 @@ export const metadata = {
   description: "Portfolio of Clinton Yade — Data Scientist & Software Engineer",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar />
-          {children}
-        </ThemeProvider>
+    <html lang="en">
+      <body className="relative min-h-screen bg-gradient-to-b from-black via-[#0a0f1f] to-[#0f172a] text-white overflow-x-hidden">
+        {/* 🔑 Global particles, shared across all pages */}
+        <BackgroundParticles />
+        <main className="relative z-10">{children}</main>
       </body>
     </html>
   );
