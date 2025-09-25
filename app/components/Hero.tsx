@@ -15,12 +15,21 @@ export default function Hero() {
   const roles = ["Data Scientist", "Data Analyst", "Software Engineer"];
   const [index, setIndex] = useState(0);
 
+  // ✅ Toast State
+  const [showToast, setShowToast] = useState(false);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % roles.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  // ✅ Handle CV download
+  const handleDownload = () => {
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2500); // Hide after 2.5s
+  };
 
   return (
     <section
@@ -41,7 +50,7 @@ export default function Hero() {
           particles: {
             color: { value: "#00d4ff" },
             links: { enable: true, color: "#ffffff", distance: 150, opacity: 0.3 },
-            move: { enable: true, speed: 0.3 }, // slow stars
+            move: { enable: true, speed: 0.4 },
             number: { value: 60 },
             opacity: { value: 0.4 },
             size: { value: { min: 1, max: 4 } },
@@ -50,30 +59,41 @@ export default function Hero() {
         className="absolute inset-0 z-0"
       />
 
+      {/* ✅ Premium Toast Notification with Bounce */}
+      <AnimatePresence>
+        {showToast && (
+          <motion.div
+            initial={{ x: 300, opacity: 0, scale: 0.9 }}
+            animate={{ x: 0, opacity: 1, scale: 1 }}
+            exit={{ x: 300, opacity: 0, scale: 0.9 }}
+            transition={{
+              type: "spring",
+              stiffness: 120,
+              damping: 15,
+            }}
+            className="fixed top-6 right-6 px-5 py-3 rounded-xl shadow-xl z-50 
+                       bg-gradient-to-r from-blue-500/80 via-purple-500/80 to-pink-500/80
+                       backdrop-blur-md border border-white/20 text-white font-semibold text-sm sm:text-base
+                       flex items-center gap-2"
+          >
+            ✨ CV is downloading...
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Top Section */}
       <div className="relative z-10 flex flex-col items-center space-y-4 pt-14 sm:pt-16">
-        {/* Profile Image with Pulsing Glow */}
-        <div className="relative">
-          <motion.div
-            initial={{ opacity: 0.3, scale: 1 }}
-            animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 blur-2xl"
-          ></motion.div>
+        <motion.img
+          src="/profile.jpg"
+          alt="Clinton Yade"
+          className="w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 
+                     rounded-full border-4 border-white shadow-xl object-cover 
+                     hover:scale-105 transition-transform duration-300"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1 }}
+        />
 
-          <motion.img
-            src="/profile.jpg"
-            alt="Clinton Yade"
-            className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 
-                       rounded-full border-4 border-white shadow-xl object-cover 
-                       hover:scale-105 transition-transform duration-300"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1 }}
-          />
-        </div>
-
-        {/* Heading */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -85,7 +105,6 @@ export default function Hero() {
           Hi, I’m Clinton Yade
         </motion.h1>
 
-        {/* Rotating Role */}
         <div className="h-6 sm:h-8 md:h-10 overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.h2
@@ -101,7 +120,6 @@ export default function Hero() {
           </AnimatePresence>
         </div>
 
-        {/* Description */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -114,9 +132,8 @@ export default function Hero() {
         </motion.p>
       </div>
 
-      {/* Middle Section: Stats + Buttons */}
-      <div className="relative z-10 flex flex-col items-center space-y-4 justify-center">
-        {/* Stats */}
+      {/* Middle Section */}
+      <div className="relative z-10 flex flex-col items-center space-y-6 justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -141,94 +158,83 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* Buttons with Glow */}
+        {/* Buttons */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.5 }}
-          className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-6 relative"
+          className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4"
         >
-          <motion.div
-            initial={{ opacity: 0.2, scale: 1 }}
-            animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.05, 1] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -inset-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 blur-2xl rounded-xl"
-          ></motion.div>
-
           <a
             href="#projects"
-            className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
-                       text-white font-semibold shadow-md hover:scale-105 transition-transform text-xs sm:text-sm relative z-10"
+            className="relative px-3 py-1.5 sm:px-4 sm:py-2 rounded-md 
+                       bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 
+                       text-white font-semibold shadow-md hover:scale-105 transition-transform text-xs sm:text-sm"
           >
             View My Work
+            <span className="absolute inset-0 rounded-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 blur-md opacity-40 -z-10"></span>
           </a>
+
+          {/* ✅ Force Download + Toast */}
           <a
-            href="/cv.pdf"
-            className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-md border border-blue-400 text-blue-300 font-semibold 
-                       shadow-md hover:bg-blue-400 hover:text-white transition text-xs sm:text-sm relative z-10"
+            href="/my resume.pdf"
+            download
+            onClick={handleDownload}
+            className="relative px-3 py-1.5 sm:px-4 sm:py-2 rounded-md border border-blue-400 
+                       text-blue-300 font-semibold shadow-md hover:bg-blue-400 hover:text-white 
+                       transition text-xs sm:text-sm"
           >
             Download CV
+            <span className="absolute inset-0 rounded-md bg-blue-400 blur-md opacity-30 -z-10"></span>
           </a>
         </motion.div>
       </div>
 
-      {/* Bottom Section: Social Icons + Scroll Arrow */}
-      <div className="relative z-10 flex flex-col items-center space-y-4 pt-6 pb-4">
-        {/* Social Icons with Glow + Hover */}
+      {/* Bottom Section */}
+      <div className="relative z-10 flex flex-col items-center space-y-3 pt-4 pb-2">
+        <motion.h3
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1.7 }}
+          className="text-sm sm:text-base md:text-lg font-semibold text-gray-300 relative"
+        >
+          Follow Me
+          <motion.span
+            className="absolute -inset-1 blur-md bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-40 rounded-lg"
+            animate={{ opacity: [0.2, 0.6, 0.2] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </motion.h3>
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.8 }}
+          transition={{ duration: 1, delay: 1.9 }}
           className="flex gap-4 sm:gap-6 flex-wrap justify-center"
         >
-          {/* GitHub */}
-          <motion.a
-            href="https://github.com"
-            target="_blank"
-            className="relative p-2 sm:p-3 rounded-full"
-            whileHover={{ scale: 1.2 }}
-          >
-            <motion.div
-              className="absolute inset-0 rounded-full blur-lg bg-neutral-700 opacity-40"
-              animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.1, 1] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            />
-            <FaGithub className="relative text-lg sm:text-xl md:text-2xl text-black" />
-          </motion.a>
-
-          {/* LinkedIn */}
-          <motion.a
-            href="https://linkedin.com"
-            target="_blank"
-            className="relative p-2 sm:p-3 rounded-full"
-            whileHover={{ scale: 1.2 }}
-          >
-            <motion.div
-              className="absolute inset-0 rounded-full blur-lg bg-blue-600 opacity-40"
-              animate={{ opacity: [0.2, 0.6, 0.2], scale: [1, 1.1, 1] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            />
-            <FaLinkedin className="relative text-lg sm:text-xl md:text-2xl text-blue-600" />
-          </motion.a>
-
-          {/* Twitter */}
-          <motion.a
-            href="https://twitter.com"
-            target="_blank"
-            className="relative p-2 sm:p-3 rounded-full"
-            whileHover={{ scale: 1.2 }}
-          >
-            <motion.div
-              className="absolute inset-0 rounded-full blur-lg bg-sky-400 opacity-40"
-              animate={{ opacity: [0.2, 0.6, 0.2], scale: [1, 1.1, 1] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            />
-            <FaTwitter className="relative text-lg sm:text-xl md:text-2xl text-sky-400" />
-          </motion.a>
+          {[
+            { icon: <FaGithub />, link: "https://github.com/Clinton1029", color: "text-black" },
+            { icon: <FaLinkedin />, link: "https://www.linkedin.com/in/clinton-yade-95b01a342/", color: "text-blue-600" },
+            { icon: <FaTwitter />, link: "https://twitter.com", color: "text-sky-400" },
+          ].map((social, idx) => (
+            <motion.a
+              key={idx}
+              href={social.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileTap={{ scale: 0.8, rotate: -10 }}
+              whileHover={{ scale: 1.2, rotate: 5 }}
+              className="p-2 sm:p-3 bg-white/10 rounded-full shadow-lg transition relative"
+            >
+              <span className="absolute inset-0 blur-md bg-white opacity-20 rounded-full"></span>
+              <div className={`relative z-10 text-lg sm:text-xl md:text-2xl ${social.color}`}>
+                {social.icon}
+              </div>
+            </motion.a>
+          ))}
         </motion.div>
 
-        {/* Scroll Down Arrow */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }}>
           <a href="#about">
             <HiChevronDown className="text-lg sm:text-xl md:text-2xl text-blue-400 animate-bounce" />
           </a>
