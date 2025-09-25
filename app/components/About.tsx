@@ -64,7 +64,7 @@ export default function About() {
             innovation and creates lasting impact.
           </p>
 
-          {/* Skill Tags with glowing effect (desktop + mobile) */}
+          {/* Skill Tags with unified hover/tap bg + glow */}
           <motion.div className="flex flex-wrap justify-center md:justify-start gap-4">
             {["Data Scientist", "Software Engineer", "Machine Learning"].map(
               (skill, idx) => (
@@ -90,15 +90,18 @@ export default function About() {
                   whileHover={{
                     scale: 1.2,
                     boxShadow: "0 0 35px rgba(59,130,246,1)",
+                    background: "linear-gradient(to right, #3b82f6, #8b5cf6)", // Blue → Purple
+                    color: "#fff",
                   }}
                   whileTap={{
                     scale: 1.2,
                     boxShadow: "0 0 35px rgba(59,130,246,1)",
+                    background: "linear-gradient(to right, #3b82f6, #8b5cf6)",
+                    color: "#fff",
                   }}
                   className="px-5 py-2 rounded-full bg-white/10 backdrop-blur-lg text-gray-200 
                              text-sm sm:text-base border border-white/20 
-                             hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 
-                             hover:text-white transition duration-300"
+                             transition duration-300"
                 >
                   {skill}
                 </motion.span>
