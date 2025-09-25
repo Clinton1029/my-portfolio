@@ -1,8 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function About() {
+  const skills = ["Data Scientist", "Software Engineer", "Machine Learning"];
+  const [activeSkill, setActiveSkill] = useState<number | null>(null);
+
   return (
     <motion.section
       id="about"
@@ -64,49 +68,37 @@ export default function About() {
             innovation and creates lasting impact.
           </p>
 
-          {/* Skill Tags with unified hover/tap bg + glow */}
+          {/* Skill Tags */}
           <motion.div className="flex flex-wrap justify-center md:justify-start gap-4">
-            {["Data Scientist", "Software Engineer", "Machine Learning"].map(
-              (skill, idx) => (
+            {skills.map((skill, idx) => {
+              const isActive = activeSkill === idx;
+              return (
                 <motion.span
                   key={idx}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.2 }}
-                  viewport={{ once: true }}
+                  onHoverStart={() => setActiveSkill(idx)}
+                  onHoverEnd={() => setActiveSkill(null)}
+                  onTapStart={() => setActiveSkill(idx)}
+                  onTapCancel={() => setActiveSkill(null)}
+                  onTap={() => setActiveSkill(null)}
                   animate={{
-                    scale: [1, 1.05, 1],
-                    boxShadow: [
-                      "0 0 10px rgba(59,130,246,0.3)",
-                      "0 0 25px rgba(59,130,246,0.6)",
-                      "0 0 10px rgba(59,130,246,0.3)",
-                    ],
+                    scale: isActive ? 1.2 : 1,
+                    boxShadow: isActive
+                      ? "0 0 35px rgba(59,130,246,1)"
+                      : "0 0 10px rgba(59,130,246,0.3)",
+                    background: isActive
+                      ? "linear-gradient(to right, #3b82f6, #8b5cf6)"
+                      : "rgba(255,255,255,0.05)",
+                    color: isActive ? "#fff" : "#e5e7eb",
                   }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  whileHover={{
-                    scale: 1.2,
-                    boxShadow: "0 0 35px rgba(59,130,246,1)",
-                    background: "linear-gradient(to right, #3b82f6, #8b5cf6)", // Blue → Purple
-                    color: "#fff",
-                  }}
-                  whileTap={{
-                    scale: 1.2,
-                    boxShadow: "0 0 35px rgba(59,130,246,1)",
-                    background: "linear-gradient(to right, #3b82f6, #8b5cf6)",
-                    color: "#fff",
-                  }}
-                  className="px-5 py-2 rounded-full bg-white/10 backdrop-blur-lg text-gray-200 
+                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  className="px-5 py-2 rounded-full backdrop-blur-lg 
                              text-sm sm:text-base border border-white/20 
-                             transition duration-300"
+                             transition duration-300 cursor-pointer"
                 >
                   {skill}
                 </motion.span>
-              )
-            )}
+              );
+            })}
           </motion.div>
 
           {/* View CV Button */}
