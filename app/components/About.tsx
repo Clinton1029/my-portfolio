@@ -31,7 +31,7 @@ export default function About() {
                        shadow-[0_0_40px_rgba(96,165,250,0.4)] border-4 border-white/20"
             animate={{
               y: [0, -12, 0],
-              scale: [1, 1.03, 1], // sync pulse with skills
+              scale: [1, 1.03, 1],
             }}
             transition={{
               duration: 4,
@@ -47,7 +47,7 @@ export default function About() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
           viewport={{ once: true }}
-          className="text-center md:text-left space-y-8"
+          className="text-center md:text-left space-y-6"
         >
           <h2 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text 
                          bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 drop-shadow-lg">
@@ -65,25 +65,28 @@ export default function About() {
           </p>
 
           {/* Skill Tags */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-4">
+          <motion.div
+            className="flex flex-wrap justify-center md:justify-start gap-4"
+            whileHover={{ scale: 1.02 }}
+          >
             {["Data Scientist", "Software Engineer", "Machine Learning"].map(
               (skill, idx) => (
                 <motion.span
                   key={idx}
                   whileHover={{
                     scale: 1.15,
-                    boxShadow: "0 0 20px rgba(59,130,246,0.6)", // glow on hover
+                    boxShadow: "0 0 25px rgba(59,130,246,0.8)",
                   }}
                   whileTap={{
                     scale: 0.95,
-                    boxShadow: "0 0 25px rgba(168,85,247,0.8)", // stronger glow on mobile tap
+                    boxShadow: "0 0 30px rgba(168,85,247,0.9)",
                   }}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.2 }}
                   viewport={{ once: true }}
                   animate={{
-                    scale: [1, 1.05, 1], // subtle pulse
+                    scale: [1, 1.05, 1],
                   }}
                   className="px-5 py-2 rounded-full bg-white/10 backdrop-blur-lg text-gray-200 
                              text-sm sm:text-base shadow-lg border border-white/20 
@@ -94,7 +97,7 @@ export default function About() {
                 </motion.span>
               )
             )}
-          </div>
+          </motion.div>
 
           {/* View CV Button */}
           <motion.a
@@ -105,7 +108,7 @@ export default function About() {
             rel="noopener noreferrer"
             className="relative inline-block px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 
                        via-purple-500 to-pink-500 text-white font-semibold 
-                       mt-4 sm:mt-2 md:mt-6
+                       mt-3 sm:mt-2 md:mt-4
                        shadow-[0_0_25px_rgba(96,165,250,0.5)] hover:shadow-[0_0_40px_rgba(167,139,250,0.8)] 
                        transition duration-300"
           >
