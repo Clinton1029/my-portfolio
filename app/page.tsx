@@ -3,6 +3,7 @@
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Navbar from "./components/Navbar";
+import Services from "./components/Services";
 
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <About />
+      <Services />
       <section className="h-screen flex items-center justify-center">
         <h1 className="text-4xl font-bold">Hello World</h1>
       </section>
