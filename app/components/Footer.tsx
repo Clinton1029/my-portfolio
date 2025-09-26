@@ -37,34 +37,51 @@ export default function Footer() {
           Crafting data-driven solutions and modern software with precision and passion.
         </p>
 
-        {/* Socials */}
+        {/* 🔹 Socials with Brand Colors + Glow */}
         <div className="flex justify-center gap-6 mb-10">
-          {[
-            {
-              href: "https://github.com/Clinton1029",
-              icon: <Github className="w-5 h-5" />,
-            },
-            {
-              href: "https://linkedin.com/in/your-profile",
-              icon: <Linkedin className="w-5 h-5" />,
-            },
-            {
-              href: "https://twitter.com/your-handle",
-              icon: <Twitter className="w-5 h-5" />,
-            },
-          ].map((social, i) => (
-            <a
-              key={i}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md
-                         hover:scale-110 hover:shadow-[0_0_25px_rgba(59,130,246,0.8)]
-                         transition-transform duration-300 ease-out"
-            >
-              {social.icon}
-            </a>
-          ))}
+          {/* GitHub */}
+          <a
+            href="https://github.com/Clinton1029"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md
+                       transition-transform duration-300 ease-out hover:scale-110"
+          >
+            <Github
+              className="w-6 h-6"
+              style={{ color: "#ffffff" }} // GitHub brand (white)
+            />
+          </a>
+
+          {/* LinkedIn */}
+          <a
+            href="https://linkedin.com/in/your-profile"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md
+                       transition-transform duration-300 ease-out hover:scale-110
+                       hover:shadow-[0_0_25px_rgba(10,102,194,0.9)]"
+          >
+            <Linkedin
+              className="w-6 h-6"
+              style={{ color: "#0A66C2" }} // LinkedIn blue
+            />
+          </a>
+
+          {/* Twitter */}
+          <a
+            href="https://twitter.com/your-handle"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md
+                       transition-transform duration-300 ease-out hover:scale-110
+                       hover:shadow-[0_0_25px_rgba(29,155,240,0.9)]"
+          >
+            <Twitter
+              className="w-6 h-6"
+              style={{ color: "#1DA1F2" }} // Twitter blue
+            />
+          </a>
         </div>
 
         {/* Copyright */}
