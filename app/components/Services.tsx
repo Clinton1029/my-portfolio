@@ -25,6 +25,13 @@ const SERVICES = [
   },
 ];
 
+// Different entry directions
+const ENTRY_VARIANTS = [
+  { hidden: { opacity: 0, x: -80 }, visible: { opacity: 1, x: 0 } }, // left
+  { hidden: { opacity: 0, y: 80 }, visible: { opacity: 1, y: 0 } }, // bottom
+  { hidden: { opacity: 0, x: 80 }, visible: { opacity: 1, x: 0 } }, // right
+];
+
 export default function Services() {
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
@@ -57,9 +64,10 @@ export default function Services() {
           return (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: idx * 0.2 }}
+              variants={ENTRY_VARIANTS[idx % ENTRY_VARIANTS.length]}
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 1, delay: idx * 0.3, ease: "easeOut" }}
               viewport={{ once: true }}
               whileHover={{
                 scale: 1.1,
