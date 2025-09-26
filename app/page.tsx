@@ -15,6 +15,7 @@ export default function Home() {
       <About />
       <Services />
       <Skills />
+      
       <section className="h-screen flex items-center justify-center">
         <h1 className="text-4xl font-bold">Hello World</h1>
       </section>
