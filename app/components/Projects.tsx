@@ -7,17 +7,17 @@ const PROJECTS = [
   {
     title: "Data Analytics Dashboard",
     description:
-      "An interactive dashboard built with Power BI and Python for visualizing key business KPIs.",
-    image: "/projects/dashboard.jpg", // Replace with your project image
-    tech: ["Python", "Power BI", "SQL"],
+      "Analyzed global economic trends and presented findings to highlight key macroeconomic patterns.",
+    image: "/dashboard.webp", // Replace with your project image
+    tech: ["Python","SQL"],
     live: "https://your-live-demo-link.com",
-    code: "https://github.com/your-repo",
+    code: "https://github.com/Clinton1029/Global-Economic-Analysis",
   },
   {
     title: "E-commerce Web App",
     description:
       "A scalable e-commerce platform built with Django, PostgreSQL, and Tailwind CSS.",
-    image: "/projects/ecommerce.jpg",
+    image: "/ecommerce.jpg",
     tech: ["Django", "PostgreSQL", "Tailwind"],
     live: "https://your-live-demo-link.com",
     code: "https://github.com/your-repo",
@@ -26,7 +26,7 @@ const PROJECTS = [
     title: "Machine Learning Model",
     description:
       "A predictive model for customer churn analysis using TensorFlow and Scikit-learn.",
-    image: "/projects/ml-model.jpg",
+    image: "/ml-model.jpg",
     tech: ["TensorFlow", "Python", "Pandas"],
     live: "https://your-live-demo-link.com",
     code: "https://github.com/your-repo",
