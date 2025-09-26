@@ -20,28 +20,28 @@ import {
 } from "lucide-react";
 
 const DATA_SCIENCE = [
-  { icon: <Braces className="w-10 h-10 text-yellow-400" />, name: "Python" },
-  { icon: <Database className="w-10 h-10 text-blue-400" />, name: "MySQL" },
-  { icon: <Database className="w-10 h-10 text-indigo-400" />, name: "PostgreSQL" },
-  { icon: <BarChart className="w-10 h-10 text-orange-400" />, name: "Tableau" },
-  { icon: <BarChart className="w-10 h-10 text-green-400" />, name: "Power BI" },
-  { icon: <GitBranch className="w-10 h-10 text-red-400" />, name: "Git & GitHub" },
-  { icon: <FileCode className="w-10 h-10 text-gray-300" />, name: "MS Office" },
-  { icon: <Rocket className="w-10 h-10 text-pink-400" />, name: "DataOps" },
-  { icon: <Cloud className="w-10 h-10 text-blue-500" />, name: "MS Azure" },
-  { icon: <Terminal className="w-10 h-10 text-purple-400" />, name: "VS Code" },
-  { icon: <Server className="w-10 h-10 text-teal-400" />, name: "Jupyter Notebook" },
-  { icon: <Cpu className="w-10 h-10 text-orange-500" />, name: "TensorFlow" },
+  { icon: <Braces className="w-10 h-10 text-yellow-400" />, name: "Python", glow: "rgba(250,204,21,1)" }, // Yellow
+  { icon: <Database className="w-10 h-10 text-blue-400" />, name: "MySQL", glow: "rgba(59,130,246,1)" }, // Blue
+  { icon: <Database className="w-10 h-10 text-indigo-400" />, name: "PostgreSQL", glow: "rgba(99,102,241,1)" }, // Indigo
+  { icon: <BarChart className="w-10 h-10 text-orange-400" />, name: "Tableau", glow: "rgba(251,146,60,1)" }, // Orange
+  { icon: <BarChart className="w-10 h-10 text-green-400" />, name: "Power BI", glow: "rgba(34,197,94,1)" }, // Green
+  { icon: <GitBranch className="w-10 h-10 text-red-400" />, name: "Git & GitHub", glow: "rgba(248,113,113,1)" }, // Red
+  { icon: <FileCode className="w-10 h-10 text-gray-300" />, name: "MS Office", glow: "rgba(209,213,219,1)" }, // Gray
+  { icon: <Rocket className="w-10 h-10 text-pink-400" />, name: "DataOps", glow: "rgba(236,72,153,1)" }, // Pink
+  { icon: <Cloud className="w-10 h-10 text-blue-500" />, name: "MS Azure", glow: "rgba(59,130,246,1)" }, // Blue
+  { icon: <Terminal className="w-10 h-10 text-purple-400" />, name: "VS Code", glow: "rgba(192,132,252,1)" }, // Purple
+  { icon: <Server className="w-10 h-10 text-teal-400" />, name: "Jupyter Notebook", glow: "rgba(45,212,191,1)" }, // Teal
+  { icon: <Cpu className="w-10 h-10 text-orange-500" />, name: "TensorFlow", glow: "rgba(249,115,22,1)" }, // Deep Orange
 ];
 
 const WEB_DEV = [
-  { icon: <Code className="w-10 h-10 text-orange-400" />, name: "HTML" },
-  { icon: <Layout className="w-10 h-10 text-blue-400" />, name: "CSS" },
-  { icon: <Layers className="w-10 h-10 text-cyan-400" />, name: "Tailwind CSS" },
-  { icon: <Layers className="w-10 h-10 text-purple-400" />, name: "Bootstrap" },
-  { icon: <FileCode className="w-10 h-10 text-yellow-300" />, name: "JavaScript" },
-  { icon: <Braces className="w-10 h-10 text-blue-500" />, name: "TypeScript" },
-  { icon: <Server className="w-10 h-10 text-green-400" />, name: "Django" },
+  { icon: <Code className="w-10 h-10 text-orange-400" />, name: "HTML", glow: "rgba(251,146,60,1)" },
+  { icon: <Layout className="w-10 h-10 text-blue-400" />, name: "CSS", glow: "rgba(59,130,246,1)" },
+  { icon: <Layers className="w-10 h-10 text-cyan-400" />, name: "Tailwind CSS", glow: "rgba(34,211,238,1)" },
+  { icon: <Layers className="w-10 h-10 text-purple-400" />, name: "Bootstrap", glow: "rgba(192,132,252,1)" },
+  { icon: <FileCode className="w-10 h-10 text-yellow-300" />, name: "JavaScript", glow: "rgba(253,224,71,1)" },
+  { icon: <Braces className="w-10 h-10 text-blue-500" />, name: "TypeScript", glow: "rgba(59,130,246,1)" },
+  { icon: <Server className="w-10 h-10 text-green-400" />, name: "Django", glow: "rgba(34,197,94,1)" },
 ];
 
 export default function Skills() {
@@ -78,12 +78,12 @@ export default function Skills() {
               <motion.div
                 key={idx}
                 whileHover={{
-                  scale: 1.2,
-                  boxShadow: "0 0 35px rgba(59,130,246,1)",
+                  scale: 1.15,
+                  boxShadow: `0 0 30px ${skill.glow}`,
                 }}
                 whileTap={{
                   scale: 1.1,
-                  boxShadow: "0 0 40px rgba(168,85,247,1)",
+                  boxShadow: `0 0 35px ${skill.glow}`,
                 }}
                 className="p-5 rounded-xl bg-white/10 backdrop-blur-lg border border-white/20 
                            shadow-lg flex flex-col items-center justify-center text-center
@@ -109,12 +109,12 @@ export default function Skills() {
               <motion.div
                 key={idx}
                 whileHover={{
-                  scale: 1.2,
-                  boxShadow: "0 0 35px rgba(236,72,153,1)",
+                  scale: 1.15,
+                  boxShadow: `0 0 30px ${skill.glow}`,
                 }}
                 whileTap={{
                   scale: 1.1,
-                  boxShadow: "0 0 40px rgba(59,130,246,1)",
+                  boxShadow: `0 0 35px ${skill.glow}`,
                 }}
                 className="p-5 rounded-xl bg-white/10 backdrop-blur-lg border border-white/20 
                            shadow-lg flex flex-col items-center justify-center text-center
