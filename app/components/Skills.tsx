@@ -16,6 +16,7 @@ import {
   Braces,
   Rocket,
   Server,
+  Cpu,
 } from "lucide-react";
 
 const DATA_SCIENCE = [
@@ -30,6 +31,7 @@ const DATA_SCIENCE = [
   { icon: <Cloud className="w-10 h-10 text-blue-500" />, name: "MS Azure" },
   { icon: <Terminal className="w-10 h-10 text-purple-400" />, name: "VS Code" },
   { icon: <Server className="w-10 h-10 text-teal-400" />, name: "Jupyter Notebook" },
+  { icon: <Cpu className="w-10 h-10 text-orange-500" />, name: "TensorFlow" },
 ];
 
 const WEB_DEV = [
@@ -76,10 +78,13 @@ export default function Skills() {
               <motion.div
                 key={idx}
                 whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 0 30px rgba(59,130,246,0.8)",
+                  scale: 1.2,
+                  boxShadow: "0 0 35px rgba(59,130,246,1)",
                 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{
+                  scale: 1.1,
+                  boxShadow: "0 0 40px rgba(168,85,247,1)",
+                }}
                 className="p-5 rounded-xl bg-white/10 backdrop-blur-lg border border-white/20 
                            shadow-lg flex flex-col items-center justify-center text-center
                            transition-all duration-300 hover:bg-gradient-to-r 
@@ -104,10 +109,13 @@ export default function Skills() {
               <motion.div
                 key={idx}
                 whileHover={{
-                  scale: 1.1,
-                  boxShadow: "0 0 30px rgba(236,72,153,0.8)",
+                  scale: 1.2,
+                  boxShadow: "0 0 35px rgba(236,72,153,1)",
                 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{
+                  scale: 1.1,
+                  boxShadow: "0 0 40px rgba(59,130,246,1)",
+                }}
                 className="p-5 rounded-xl bg-white/10 backdrop-blur-lg border border-white/20 
                            shadow-lg flex flex-col items-center justify-center text-center
                            transition-all duration-300 hover:bg-gradient-to-r 
