@@ -25,11 +25,10 @@ const SERVICES = [
   },
 ];
 
-// Different entry directions
 const ENTRY_VARIANTS = [
-  { hidden: { opacity: 0, x: -80 }, visible: { opacity: 1, x: 0 } }, // left
-  { hidden: { opacity: 0, y: 80 }, visible: { opacity: 1, y: 0 } }, // bottom
-  { hidden: { opacity: 0, x: 80 }, visible: { opacity: 1, x: 0 } }, // right
+  { hidden: { opacity: 0, x: -80 }, visible: { opacity: 1, x: 0 } },
+  { hidden: { opacity: 0, y: 80 }, visible: { opacity: 1, y: 0 } },
+  { hidden: { opacity: 0, x: 80 }, visible: { opacity: 1, x: 0 } },
 ];
 
 export default function Services() {
@@ -45,17 +44,22 @@ export default function Services() {
       className="relative z-10 min-h-screen flex flex-col items-center justify-center 
                  px-6 sm:px-12 py-20 bg-gradient-to-b from-slate-950 via-slate-900/80 to-black text-white"
     >
-      {/* Section Header */}
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
+      {/* Premium Section Header */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text 
-                   bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 drop-shadow-lg text-center mb-14"
+        className="relative mb-20 text-center"
       >
-        My Services
-      </motion.h2>
+        <h2
+          className="text-4xl sm:text-6xl font-extrabold text-transparent bg-clip-text 
+                     bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 drop-shadow-[0_0_20px_rgba(168,85,247,0.6)]"
+        >
+          My Services
+        </h2>
+        <div className="mx-auto mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 shadow-lg shadow-purple-500/40" />
+      </motion.div>
 
       {/* Services Grid */}
       <div className="grid gap-8 sm:gap-12 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-7xl">
@@ -83,12 +87,27 @@ export default function Services() {
                     "linear-gradient(to right, rgba(59,130,246,0.25), rgba(168,85,247,0.25), rgba(236,72,153,0.25))",
                 }),
               }}
-              onClick={() => setActiveCard(isActive ? null : idx)} // toggle on mobile
+              onClick={() => setActiveCard(isActive ? null : idx)}
               className="p-8 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 
                          shadow-lg flex flex-col items-center text-center transition-all duration-300
                          hover:bg-gradient-to-r hover:from-blue-500/20 hover:via-purple-500/20 hover:to-pink-500/20 cursor-pointer"
             >
-              <div className="mb-6">{service.icon}</div>
+              {/* Pulsing Icon */}
+              <motion.div
+                animate={{
+                  scale: [1, 1.2, 1],
+                  boxShadow: [
+                    "0 0 0px rgba(255,255,255,0)",
+                    "0 0 25px rgba(59,130,246,0.8)",
+                    "0 0 0px rgba(255,255,255,0)",
+                  ],
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="mb-6 rounded-full p-4"
+              >
+                {service.icon}
+              </motion.div>
+
               <h3 className="text-2xl font-semibold mb-3">{service.title}</h3>
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                 {service.description}
