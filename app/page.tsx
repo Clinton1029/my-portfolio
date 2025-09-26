@@ -7,6 +7,7 @@ import Services from "./components/Services";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 
 export default function Home() {
@@ -19,9 +20,8 @@ export default function Home() {
       <Skills />
       <Projects />
       <Contact />
-      <section className="h-screen flex items-center justify-center">
-        <h1 className="text-4xl font-bold">Hello World</h1>
-      </section>
+      <Footer />
+      
     </main>
   );
 }
