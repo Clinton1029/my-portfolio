@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Code, Database, Brain } from "lucide-react";
 
@@ -25,6 +26,8 @@ const SERVICES = [
 ];
 
 export default function Services() {
+  const [activeCard, setActiveCard] = useState<number | null>(null);
+
   return (
     <motion.section
       id="services"
@@ -49,28 +52,42 @@ export default function Services() {
 
       {/* Services Grid */}
       <div className="grid gap-8 sm:gap-12 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-7xl">
-        {SERVICES.map((service, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: idx * 0.2 }}
-            viewport={{ once: true }}
-            whileHover={{
-              scale: 1.08,
-              boxShadow: "0 0 30px rgba(59,130,246,0.6)",
-            }}
-            className="p-8 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 
-                       shadow-lg flex flex-col items-center text-center transition-all duration-300
-                       hover:bg-gradient-to-r hover:from-blue-500/20 hover:via-purple-500/20 hover:to-pink-500/20"
-          >
-            <div className="mb-6">{service.icon}</div>
-            <h3 className="text-2xl font-semibold mb-3">{service.title}</h3>
-            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-              {service.description}
-            </p>
-          </motion.div>
-        ))}
+        {SERVICES.map((service, idx) => {
+          const isActive = activeCard === idx;
+          return (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: idx * 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{
+                scale: 1.1,
+                boxShadow: "0 0 35px rgba(59,130,246,1)",
+              }}
+              animate={{
+                y: [0, -8, 0],
+                transition: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                ...(isActive && {
+                  scale: 1.1,
+                  boxShadow: "0 0 35px rgba(59,130,246,1)",
+                  background:
+                    "linear-gradient(to right, rgba(59,130,246,0.25), rgba(168,85,247,0.25), rgba(236,72,153,0.25))",
+                }),
+              }}
+              onClick={() => setActiveCard(isActive ? null : idx)} // toggle on mobile
+              className="p-8 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 
+                         shadow-lg flex flex-col items-center text-center transition-all duration-300
+                         hover:bg-gradient-to-r hover:from-blue-500/20 hover:via-purple-500/20 hover:to-pink-500/20 cursor-pointer"
+            >
+              <div className="mb-6">{service.icon}</div>
+              <h3 className="text-2xl font-semibold mb-3">{service.title}</h3>
+              <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+                {service.description}
+              </p>
+            </motion.div>
+          );
+        })}
       </div>
     </motion.section>
   );
