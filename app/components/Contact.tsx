@@ -46,14 +46,14 @@ export default function Contact() {
               href="mailto:your@email.com"
               className="hover:underline text-gray-200"
             >
-              your@email.com
+              yadeclinton20@gmail.com
             </a>
           </div>
 
           <div className="flex items-center gap-4">
             <Phone className="w-6 h-6 text-purple-400" />
             <a href="tel:+254700000000" className="hover:underline text-gray-200">
-              +254 700 000 000
+              +254 790 847 824
             </a>
           </div>
 
