@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react"; // ✅ Modern X icon
 
 const LINKS = [
   { id: "hero", label: "Home" },
@@ -20,9 +21,9 @@ export default function Navbar() {
   // ✅ Reset to hero on refresh
   useEffect(() => {
     if (typeof window !== "undefined") {
-      window.history.scrollRestoration = "manual"; // stop auto scroll restore
-      window.scrollTo({ top: 0, behavior: "instant" }); // force start at top
-      setActive("hero"); // highlight hero in navbar
+      window.history.scrollRestoration = "manual";
+      window.scrollTo({ top: 0, behavior: "instant" });
+      setActive("hero");
     }
   }, []);
 
@@ -31,7 +32,7 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      const scrollPos = window.scrollY + 150; // offset
+      const scrollPos = window.scrollY + 150;
       let current = "hero";
 
       for (const link of LINKS) {
@@ -100,7 +101,7 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* ✅ Mobile hamburger with X toggle */}
+        {/* ✅ Mobile hamburger */}
         <button
           onClick={() => setOpen(!open)}
           className="md:hidden flex flex-col justify-between w-8 h-6 focus:outline-none"
@@ -136,7 +137,7 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
             />
 
-            {/* ✅ Premium dark blue drawer */}
+            {/* ✅ Premium dark blue drawer with Close button */}
             <motion.nav
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -146,7 +147,16 @@ export default function Navbar() {
                          bg-gradient-to-br from-[#0a0f1f] via-[#0f172a] to-[#000814] 
                          backdrop-blur-lg p-8 flex flex-col space-y-8 md:hidden shadow-2xl border-l border-white/10"
             >
-              <div className="text-xl font-bold text-white">Menu</div>
+              {/* Close button inside */}
+              <button
+                onClick={() => setOpen(false)}
+                className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 
+                           text-white transition transform hover:scale-110 focus:outline-none shadow-lg"
+              >
+                <X className="w-6 h-6 text-white drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+              </button>
+
+              <div className="text-xl font-bold text-white mt-10">Menu</div>
               {LINKS.map((link, idx) => (
                 <motion.button
                   key={link.id}
