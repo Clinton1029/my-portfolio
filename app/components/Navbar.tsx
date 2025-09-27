@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -12,6 +12,53 @@ const LINKS = [
   { id: "projects", label: "Projects" },
   { id: "contact", label: "Contact" },
 ];
+
+// ✅ Ripple effect utility
+const createRipple = (e: MouseEvent<HTMLButtonElement>) => {
+  const button = e.currentTarget;
+  const ripple = document.createElement("span");
+
+  const rect = button.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const x = e.clientX - rect.left - size / 2;
+  const y = e.clientY - rect.top - size / 2;
+
+  ripple.style.position = "absolute";
+  ripple.style.borderRadius = "50%";
+  ripple.style.background = "rgba(59,130,246,0.6)";
+  ripple.style.width = ripple.style.height = `${size}px`;
+  ripple.style.left = `${x}px`;
+  ripple.style.top = `${y}px`;
+  ripple.style.transform = "scale(0)";
+  ripple.style.opacity = "0.75";
+  ripple.style.pointerEvents = "none";
+  ripple.style.animation = "ripple 0.6s linear";
+
+  button.appendChild(ripple);
+
+  setTimeout(() => ripple.remove(), 600);
+};
+
+// ✅ Inject ripple keyframes once
+if (typeof window !== "undefined") {
+  const style = document.createElement("style");
+  style.innerHTML = `
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    .ripple-container {
+      position: relative;
+      overflow: hidden;
+    }
+  `;
+  if (!document.head.querySelector("style[data-ripple]")) {
+    style.setAttribute("data-ripple", "true");
+    document.head.appendChild(style);
+  }
+}
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -98,10 +145,30 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden flex flex-col justify-between w-8 h-6 focus:outline-none"
+        {/* ✅ Mobile hamburger with ripple + glow */}
+        <motion.button
+          onClick={(e) => {
+            createRipple(e);
+            setOpen(!open);
+          }}
+          className="md:hidden flex flex-col justify-between w-8 h-6 focus:outline-none relative ripple-container"
+          animate={
+            !open
+              ? {
+                  scale: [1, 1.1, 1],
+                  boxShadow: [
+                    "0 0 10px rgba(59,130,246,0.5)",
+                    "0 0 20px rgba(59,130,246,0.9)",
+                    "0 0 10px rgba(59,130,246,0.5)",
+                  ],
+                }
+              : {}
+          }
+          transition={
+            !open
+              ? { repeat: Infinity, duration: 2, ease: "easeInOut" }
+              : {}
+          }
         >
           <motion.span
             animate={open ? { rotate: 45, y: 9 } : { rotate: 0, y: 0 }}
@@ -118,7 +185,7 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="block w-full h-[3px] bg-white rounded"
           />
-        </button>
+        </motion.button>
       </div>
 
       {/* Mobile drawer */}
@@ -142,11 +209,14 @@ export default function Navbar() {
                          bg-gradient-to-br from-[#0a0f1f] via-[#0f172a] to-[#000814] 
                          backdrop-blur-lg p-8 flex flex-col space-y-8 md:hidden shadow-2xl border-l border-white/10"
             >
-              {/* ✅ Close button with pulse glow */}
+              {/* ✅ Close button */}
               <motion.button
-                onClick={() => setOpen(false)}
+                onClick={(e) => {
+                  createRipple(e);
+                  setOpen(false);
+                }}
                 className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 
-                           text-white transition focus:outline-none shadow-lg"
+                           text-white transition focus:outline-none shadow-lg ripple-container"
                 animate={{
                   scale: [1, 1.1, 1],
                   boxShadow: [
@@ -165,18 +235,28 @@ export default function Navbar() {
               </motion.button>
 
               <div className="text-xl font-bold text-white mt-10">Menu</div>
+
+              {/* ✅ Menu links with ripple + glow */}
               {LINKS.map((link, idx) => (
                 <motion.button
                   key={link.id}
-                  onClick={() => handleNavClick(link.id)}
+                  onClick={(e) => {
+                    createRipple(e);
+                    handleNavClick(link.id);
+                  }}
                   initial={{ x: 50, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: idx * 0.1 }}
-                  className={`text-lg text-left transition-colors ${
+                  className={`relative text-lg text-left transition-colors py-2 px-3 rounded-md ripple-container ${
                     active === link.id
-                      ? "text-blue-400 font-semibold"
-                      : "text-gray-300 hover:text-blue-400"
+                      ? "text-blue-400 font-semibold bg-white/10 shadow-md"
+                      : "text-gray-300 hover:text-blue-400 hover:bg-white/5"
                   }`}
+                  whileHover={{
+                    scale: 1.05,
+                    textShadow: "0px 0px 8px rgba(59,130,246,0.8)",
+                  }}
+                  whileTap={{ scale: 0.97 }}
                 >
                   {link.label}
                 </motion.button>
