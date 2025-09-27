@@ -60,7 +60,7 @@ export default function About() {
 
           <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
             I’m <span className="text-blue-400 font-semibold">Clinton Yade</span>, 
-            a <span className="text-purple-400 font-semibold">Data Scientist</span> 
+            a <span className="text-purple-400 font-semibold">Data Scientist </span> 
             and <span className="text-pink-400 font-semibold">Software Engineer</span>.  
             I specialize in transforming data into actionable insights and building 
             intelligent, future-ready software solutions. My mission is to deliver 

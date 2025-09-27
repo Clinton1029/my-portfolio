@@ -17,6 +17,15 @@ export default function Navbar() {
   const [active, setActive] = useState("hero");
   const [scrolled, setScrolled] = useState(false);
 
+  // ✅ Reset to hero on refresh
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.history.scrollRestoration = "manual"; // stop auto scroll restore
+      window.scrollTo({ top: 0, behavior: "instant" }); // force start at top
+      setActive("hero"); // highlight hero in navbar
+    }
+  }, []);
+
   // Scrollspy logic
   useEffect(() => {
     const handleScroll = () => {

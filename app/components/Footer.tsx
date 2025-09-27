@@ -45,7 +45,8 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md
-                       transition-transform duration-300 ease-out hover:scale-110"
+                       transition-transform duration-300 ease-out hover:scale-110
+                       hover:shadow-[0_0_25px_rgba(29,155,240,0.9)]"
           >
             <Github
               className="w-6 h-6"
@@ -55,7 +56,7 @@ export default function Footer() {
 
           {/* LinkedIn */}
           <a
-            href="https://linkedin.com/in/your-profile"
+            href="https://www.linkedin.com/in/clinton-yade-95b01a342/"
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-md
