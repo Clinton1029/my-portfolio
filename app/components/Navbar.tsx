@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react"; // ✅ Modern X icon
+import { X } from "lucide-react";
 
 const LINKS = [
   { id: "hero", label: "Home" },
@@ -18,7 +18,6 @@ export default function Navbar() {
   const [active, setActive] = useState("hero");
   const [scrolled, setScrolled] = useState(false);
 
-  // ✅ Reset to hero on refresh
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.history.scrollRestoration = "manual";
@@ -27,7 +26,6 @@ export default function Navbar() {
     }
   }, []);
 
-  // Scrollspy logic
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -48,7 +46,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ✅ Smooth scroll + update active
   const handleNavClick = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -101,7 +98,7 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* ✅ Mobile hamburger */}
+        {/* Mobile hamburger */}
         <button
           onClick={() => setOpen(!open)}
           className="md:hidden flex flex-col justify-between w-8 h-6 focus:outline-none"
@@ -128,7 +125,6 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <>
-            {/* Overlay */}
             <motion.div
               className="fixed inset-0 bg-black/50 backdrop-blur-sm"
               initial={{ opacity: 0 }}
@@ -137,7 +133,6 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
             />
 
-            {/* ✅ Premium dark blue drawer with Close button */}
             <motion.nav
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -147,14 +142,27 @@ export default function Navbar() {
                          bg-gradient-to-br from-[#0a0f1f] via-[#0f172a] to-[#000814] 
                          backdrop-blur-lg p-8 flex flex-col space-y-8 md:hidden shadow-2xl border-l border-white/10"
             >
-              {/* Close button inside */}
-              <button
+              {/* ✅ Close button with pulse glow */}
+              <motion.button
                 onClick={() => setOpen(false)}
                 className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 
-                           text-white transition transform hover:scale-110 focus:outline-none shadow-lg"
+                           text-white transition focus:outline-none shadow-lg"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  boxShadow: [
+                    "0 0 10px rgba(59,130,246,0.6)",
+                    "0 0 20px rgba(59,130,246,0.9)",
+                    "0 0 10px rgba(59,130,246,0.6)",
+                  ],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2,
+                  ease: "easeInOut",
+                }}
               >
-                <X className="w-6 h-6 text-white drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
-              </button>
+                <X className="w-6 h-6 text-white" />
+              </motion.button>
 
               <div className="text-xl font-bold text-white mt-10">Menu</div>
               {LINKS.map((link, idx) => (
