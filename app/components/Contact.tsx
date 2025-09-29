@@ -151,7 +151,7 @@ export default function Contact() {
               href="mailto:your@email.com"
               className="hover:underline text-gray-200 transition-colors"
             >
-              yadeclinton20@gmail.com
+              your@email.com
             </a>
           </div>
 
@@ -161,7 +161,7 @@ export default function Contact() {
               href="tel:+254700000000"
               className="hover:underline text-gray-200 transition-colors"
             >
-              +254 790 847 824
+              +254 700 000 000
             </a>
           </div>
 
