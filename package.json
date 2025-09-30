@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-  "build": "next build --turbopack --no-lint",   
+    "build": "next build --turbopack --no-lint",
     "start": "next start",
-
     "lint": "eslint"
   },
   "dependencies": {
@@ -23,7 +22,6 @@
     "react-tsparticles": "^2.12.2",
     "react-type-animation": "^3.2.0",
     "react-typed": "^2.0.12",
-    "resend": "^6.1.0",
     "tsparticles": "^3.9.1",
     "tsparticles-slim": "^2.12.0"
   },
