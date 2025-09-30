@@ -1,9 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "class", // important!
+  darkMode: "class", // enables class-based dark mode
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",   // app router
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}", // in case you use pages router too
+    "./components/**/*.{js,ts,jsx,tsx,mdx}", // shared components
   ],
   theme: {
     extend: {
